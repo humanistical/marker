@@ -136,6 +136,7 @@ class TableProcessor(BaseProcessor):
             for block in page.contained_blocks(document, self.block_types):
                 block.structure = []  # Remove any existing lines, spans, etc.
                 cells: List[SuryaTableCell] = tables[table_idx].cells
+                text_extraction_method = "surya" if table_data[table_idx]["ocr_block"] else "pdftext"
                 for cell in cells:
                     # Rescale the cell polygon to the page size
                     cell_polygon = PolygonBox(polygon=cell.polygon).rescale(
@@ -156,6 +157,7 @@ class TableProcessor(BaseProcessor):
                         col_id=cell.col_id,
                         is_header=bool(cell.is_header),
                         page_id=page.page_id,
+                        text_extraction_method=text_extraction_method
                     )
                     page.add_full_block(cell_block)
                     block.add_structure(cell_block)
