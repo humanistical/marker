@@ -500,6 +500,8 @@ class TableProcessor(BaseProcessor):
             return 6
         elif settings.TORCH_DEVICE_MODEL == "cuda":
             return 14
+        elif settings.TORCH_DEVICE_MODEL == "xla":
+            return 6
         return 6
 
     def get_recognition_batch_size(self):
@@ -509,4 +511,6 @@ class TableProcessor(BaseProcessor):
             return 32
         elif settings.TORCH_DEVICE_MODEL == "cuda":
             return 32
+        elif settings.TORCH_DEVICE_MODEL == "xla":
+            return 16
         return 32

@@ -51,6 +51,8 @@ class EquationProcessor(BaseProcessor):
             return 16
         elif settings.TORCH_DEVICE_MODEL == "mps":
             return 6
+        elif settings.TORCH_DEVICE_MODEL == "xla":
+            return 4
         return 6
 
     def __call__(self, document: Document):

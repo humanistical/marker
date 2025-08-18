@@ -62,6 +62,8 @@ class LayoutBuilder(BaseBuilder):
             return self.layout_batch_size
         elif settings.TORCH_DEVICE_MODEL == "cuda":
             return 12
+        elif settings.TORCH_DEVICE_MODEL == "xla":
+            return 2
         return 6
 
     def forced_layout(self, pages: List[PageGroup]) -> List[LayoutResult]:
@@ -146,7 +148,9 @@ class LayoutBuilder(BaseBuilder):
                     layout_page_size, provider_page_size
                 ).fit_to_bounds((0, 0, *provider_page_size))
                 layout_block.top_k = {
-                    BlockTypes[label]: prob for (label, prob) in bbox.top_k.items()
+                    BlockTypes[label]: prob
+                    for (label, prob) in bbox.top_k.items()
+                    if hasattr(BlockTypes, label)
                 }
                 page.add_structure(layout_block)
 

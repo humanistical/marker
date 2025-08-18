@@ -84,6 +84,8 @@ class OcrBuilder(BaseBuilder):
             return 64
         elif settings.TORCH_DEVICE_MODEL == "mps":
             return 16
+        elif settings.TORCH_DEVICE_MODEL == "xla":
+            return 32
         return 32
 
     def get_ocr_images_polygons_ids(
